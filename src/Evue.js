@@ -3,29 +3,32 @@
 import { watchEffect } from './reactivity/index.js'
 import { diff, mountElement } from './render/index.js'
 
-export const createApp = ( config ) => {
+export const createApp = ( options ) => {
   return {
-    mount(continerElSelector){
+    mount(continerElSelector){ // #app
       const containerEl = document.querySelector(continerElSelector);
 
-      const setupResult = config.setup()
+      const setupResult = options.setup()
 
-      const render = config.render(setupResult)
+      const render = options.render(setupResult)
 
+      // VNodeTree 有三个属性     tag, props, children,
       let isMounted = false;
-      let prevSubTree;
+      let prevVNodeTree;
 
       watchEffect(()=>{
+        // 初始化渲染
         if(!isMounted) {
           containerEl.innerHTML = ''
           isMounted = true
-          const subTree = config.render(setupResult)
-          prevSubTree = subTree
-          mountElement(subTree, containerEl)
+          const VNodeTree = options.render(setupResult)
+          prevVNodeTree = VNodeTree
+          mountElement(VNodeTree, containerEl)
         } else {
-          const subTree = config.render(setupResult)
-          diff(prevSubTree, subTree)
-          prevSubTree = subTree
+        // 更新
+          const VNodeTree = options.render(setupResult)
+          diff(prevVNodeTree, VNodeTree)
+          prevVNodeTree = VNodeTree
         }
       })
     }
