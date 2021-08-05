@@ -30,24 +30,12 @@ class Dep {
   }
 }
 
-const dep = new Dep(10);
-
-function effectWatch(effect) {
+export const watchEffect = (effect) => {
   // 收集依赖
   currentEffect = effect;
   effect();
-  dep.depend();
   currentEffect = null;
 }
-
-// let b;
-// effectWatch(() => {
-//   b = dep.value + 10
-//   console.log('依赖调用了吗', b);
-// });
-
-// dep.value = 20
-// dep.notice()
 
 // +++++++++++++++++++++++++++++++++++++++++++++++
 const targetMap = new WeakMap();
@@ -62,46 +50,44 @@ const getDep = (target, key) => {
   let dep = depsMap.get(key);
 
   if (!dep) {
-    dep = new Dep();
+    dep = new Dep(target[key]);
     depsMap.set(key, dep);
   }
   return dep;
 };
 
 // reactive
-function reactive(raw) {
-  return new Proxy(raw, {
-    get(target, key) {
-      // 获取到dep
-      const dep = getDep(target, key);
-
-      // 以上dep和map就成了一对, 这里就依赖收集
-      dep.depend();
-
-      return Reflect.get(target, key);
-    },
-    set(target, key, value) {
-      // 获取到dep
-      const dep = getDep(target, key);
-
-      const result = Reflect.set(target, key, value);
-
-      dep.notice();
-
-      return result; // 设置成功返回ture
+const reactvieHandlers = {
+  get(target, key) {
+    const value = getDep(target, key).value
+    if (value && typeof value === 'object') {
+      return reactive(value)
+    } else {
+      return value
     }
-  });
+  },
+  set(target, key, value) {
+    getDep(target, key).value = value
+    return true
+  }
 }
 
-const user = reactive({
-  age: 19
-});
+export function reactive(obj) {
+  return new Proxy(obj, reactvieHandlers)
+}
 
-let double;
-effectWatch(() => {
-  console.log('-----reactiveiifivjeijviej');
-  double = user.age;
-  console.log(double);
-});
 
-user.age = 20;
+
+// 测试代码, 需要删除export
+// const user = reactive({
+//   age: 19
+// });
+
+// let double;
+// watchEffect(() => {
+//   console.log('-----reactiveiifivjeijviej');
+//   double = user.age;
+//   console.log(double);
+// });
+
+// user.age = 20
