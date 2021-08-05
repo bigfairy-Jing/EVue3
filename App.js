@@ -28,14 +28,18 @@ const App = {
         },
         '++'
       ),
-      // h(
-      //   'input',
-      //   {
-      //     type:'text',
-      //     value: content.state.inputVal,
-      //     oninput: content.setInputVal
-      //   },
-      // )
+      h('br', null),
+      h('br', null),
+      h('div', null, `${content.state.inputVal}`),
+      h(
+        'input',
+        {
+          type:'text',
+          value: content.state.inputVal,
+          oninput: content.setInputVal
+        },
+        ''
+      )
     ]);
   },
   setup() {

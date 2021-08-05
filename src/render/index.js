@@ -6,7 +6,7 @@ function patchProp(el, key, prevV, nextV) {
     const evName = key.slice(2).toLocaleLowerCase();
     el.addEventListener(evName, nextV);
   } else {
-    if (nextValue === null) {
+    if (nextV === null) {
       el.removeAttribute(key, nextV);
     } else {
       el.setAttribute(key, nextV);
