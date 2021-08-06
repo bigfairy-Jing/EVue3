@@ -3,9 +3,9 @@
 import { watchEffect } from './reactivity/index.js'
 import { diff, mountElement } from './render/index.js'
 
-export const createApp = ( options ) => {
+export const createApp = (options) => {
   return {
-    mount(continerElSelector){ // #app
+    mount(continerElSelector) { // #app
       const containerEl = document.querySelector(continerElSelector);
 
       const setupResult = options.setup()
@@ -16,16 +16,16 @@ export const createApp = ( options ) => {
       let isMounted = false;
       let prevVNodeTree;
 
-      watchEffect(()=>{
+      watchEffect(() => {
         // 初始化渲染
-        if(!isMounted) {
+        if (!isMounted) {
           containerEl.innerHTML = ''
           isMounted = true
           const VNodeTree = options.render(setupResult)
           prevVNodeTree = VNodeTree
           mountElement(VNodeTree, containerEl)
         } else {
-        // 更新
+          // 更新
           const VNodeTree = options.render(setupResult)
           diff(prevVNodeTree, VNodeTree)
           prevVNodeTree = VNodeTree

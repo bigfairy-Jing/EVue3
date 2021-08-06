@@ -49,7 +49,7 @@ export function diff(v1, v2) {
   if (typeof newChildren === 'string') {
     if (typeof oldChildren === 'string') {
       // ①新的和旧的都为string
-      if(newChildren !== oldChildren) el.innerText = newChildren;
+      if (newChildren !== oldChildren) el.innerText = newChildren;
     }
   } else if (Array.isArray(newChildren)) {
     if (typeof oldChildren === 'string') {

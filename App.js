@@ -1,6 +1,6 @@
 import { reactive } from './src/reactivity/index.js';
 
-// 虚拟
+// 虚拟DOM 
 const h = (tag, props, children = []) => {
   return {
     tag,
