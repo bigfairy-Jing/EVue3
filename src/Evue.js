@@ -3,7 +3,13 @@
 import { watchEffect } from './reactivity/index.js'
 import { diff, mountElement } from './render/index.js'
 
-export const createApp = (options) => {
+/*
+ *
+ *
+ * @param {*} options : {setup   render}
+ * @return  mount函数传入参数为 container元素选择器
+ */
+const createApp = (options) => {
   return {
     mount(continerElSelector) { // #app
       const containerEl = document.querySelector(continerElSelector);

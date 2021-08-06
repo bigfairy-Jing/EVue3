@@ -22,7 +22,11 @@ export function diff(v1, v2) {
   // tag 不一样，直接替换掉
   if (v1.tag !== v2.tag) {
     // Element.replaceWith() 方法将其父级子列表中的此 Element 替换为一组
-    v1.el.replaceWith(util.createElement(v2.tag));
+    // v1.el.replaceWith(util.createElement(v2.tag));
+    const parent = v1.el.parentNode
+    const anchor = v1.el.nextSibling
+    parent.removeChild(v1.el)
+    mountElement(v1, parent, anchor)
     return;
   }
 
@@ -84,7 +88,7 @@ export function diff(v1, v2) {
 }
 
 // 将虚拟dom节点 转换成真实的dom节点
-export function mountElement(vnode, containerEl) {
+export function mountElement(vnode, containerEl, anchor) {
   // 渲染成真实的dom节点
   const el = (vnode.el = util.createElement(vnode.tag));
 
@@ -103,6 +107,10 @@ export function mountElement(vnode, containerEl) {
     util.insertEl(util.createText(vnode.children), el);
   }
 
-  // 将最后得到的le插入到 mount调用的元素中
-  util.insertEl(el, containerEl);
+  // 将最后得到的el插入到 mount调用的元素中
+  if (anchor) {
+    containerEl.insertBefore(el, anchor)
+  } else {
+    containerEl.appendChild(el)
+  }
 }

@@ -44,7 +44,7 @@ const App = {
   },
   setup() {
     const state = reactive({ 
-      message: 'this is easy Vue3!!!', 
+      message: 'this is EVue3!!!', 
       inputVal: '输入框的内容',
       num: 0 
     });
