@@ -45,7 +45,7 @@ const App = {
   setup() {
     const state = reactive({ 
       message: 'this is EVue3!!!', 
-      inputVal: '输入框的内容',
+      inputVal: '知行合一',
       num: 0 
     });
 

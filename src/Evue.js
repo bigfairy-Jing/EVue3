@@ -9,7 +9,7 @@ import { diff, mountElement } from './render/index.js'
  * @param {*} options : {setup   render}
  * @return  mount函数传入参数为 container元素选择器
  */
-const createApp = (options) => {
+export const createApp = (options) => {
   return {
     mount(continerElSelector) { // #app
       const containerEl = document.querySelector(continerElSelector);
