@@ -21,3 +21,10 @@
 
 #### 思路
 1. 通过render函数代替编译器, 根据尤雨溪 简版教学 写数据响应模块和数据渲染模块
+
+
+### 参考文档
+
+* [Vue3-mini 尤雨溪教案地址](https://codepen.io/collection/DkxpbE?cursor=ZD0xJm89MSZwPTEmdj0z)
+
+* Vue2部分已在附件中
